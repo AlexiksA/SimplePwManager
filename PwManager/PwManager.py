@@ -1,4 +1,3 @@
-from ast import Try, TryStar
 from cryptography.fernet import Fernet, InvalidToken
 from time import sleep
 
@@ -19,7 +18,11 @@ def addPw():
             pwFile.write(name + "|" + encryptedPw + "\n")
 
 def viewPw():
-    fer = Fernet(input('Key: '))
+    try:
+        fer = Fernet(input('Key: '))
+    except ValueError as e:
+        print(f'{e}')
+        return
     with open('passwords.txt', 'r') as pwFile:
         for line in pwFile.readlines():
             data = line.rstrip()
