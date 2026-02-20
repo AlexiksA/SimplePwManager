@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Password Vault</h1>
+    <button id="fetchBtn">Click to View Password</button>
+
+    <div id="display" style="margin-top: 20px; font-weight: bold;">
+    </div>
+
+    <script>
+        const btn = document.getElementById('fetchBtn');
+        const display = document.getElementById('display');
+
+        btn.addEventListener('click', () => {
+        // This is the API call to your Python script
+        fetch('http://127.0.0.1:5000/get-password')
+        .then(response => response.json())
+        .then(data => {
+        display.innerText = `Service: ${data.service} | Pass: ${data.password}`;
+        })
+        .catch(error => {
+        display.innerText = "Error: Is the Python script running?";
+        console.error('Error:', error);
+        });
+        });
+    </script>
+</body>
+</html>

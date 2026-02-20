@@ -35,19 +35,19 @@ def viewPw():
             else:
                 print(f"User: {user} | Password: {decryptedPw}")
 
-if(__name__ == "__main__"):
-    print("This is a primitive Password Manager")
-    sleep(3)
+#if(__name__ == "__main__"):
+#    print("This is a primitive Password Manager")
+    # sleep(3)
 
-    while(1):
-        mode = input("GenKey, Add, View or Q? ").lower()
-        if(mode == "genkey"):
-            genKey()
-        elif(mode == "add"):
-            addPw()
-        elif(mode == "view"):
-            viewPw()
-        elif(mode == "q"):
-            break
-        else:
-            print("Not a known mode")
+    # while(1):
+    #     mode = input("GenKey, Add, View or Q? ").lower()
+    #     if(mode == "genkey"):
+    #         genKey()
+    #     elif(mode == "add"):
+    #         addPw()
+    #     elif(mode == "view"):
+    #         viewPw()
+    #     elif(mode == "q"):
+    #         break
+    #     else:
+    #         print("Not a known mode")
