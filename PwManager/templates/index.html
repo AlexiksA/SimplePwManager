@@ -4,17 +4,32 @@
     <h1>PwManager</h1>
     <div id="mainDIv">
         <form id="pwForm">
-            <label for="user_input">Enter something:</label>
+            <label for="user_input">Enter a key:</label>
             <input type="text" id="user_input" name="my_data">
             <button type="submit">Send to Flask</button>
         </form>
-        <br>
+        <hr>
         <button id="genBtn">Click to generate a new key</button>
+        <hr>
+        <form id="addForm">
+            <label for="user_input">Enter username:</label>
+            <input type="text" id="user_input" name="usern">
+            <br>
+            <label for="pass_input">Enter password:</label>
+            <input type="text" id="pass_input" name="passw">
+            <br>
+            <label for="key_input">Enter key:</label>
+            <input type="text" id="key_input" name="keyIn">
+            <button type="submit">Send to Flask</button>
+        </form>
     </div>
+    <div id="Confirm" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px;"></div>
     <script>
         const pwForm = document.getElementById("pwForm");
+        const addForm = document.getElementById("addForm");
         const genBtn = document.getElementById("genBtn");
         const display = document.getElementById("mainDIv");
+        const confirm = document.getElementById("Confirm");
         pwForm.addEventListener("submit", function(e) {
             e.preventDefault()
             const formData = new FormData(pwForm);
@@ -25,14 +40,14 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    display.innerHTML = "";
+                    confirm.innerHTML = "";
                     data.forEach(item => {
-                        display.innerHTML += `<p>UserL ${item.user}, Pass: ${item.password}</p>`;
+                        confirm.innerHTML += `<p>User: ${item.user}, Pass: ${item.password}</p>`;
                     });
                         
             })
             .catch(error => {
-                    display.innerText = "Did you start server.py?";
+                    confirm.innerText = "Did you start server.py?";
                     console.error('Error:', error);
             });
         });
@@ -40,11 +55,29 @@
             fetch('/get')
             .then(response => response.json())
             .then(data => {
-                display.innerHTML = `Your key is: ${data.key}`;
+                confirm.innerHTML = `Your key is: ${data.key}`;
             })
             .catch(error => {
-                display.innerHTML = "Is server.py on?";
+                confirm.innerHTML = "Is server.py on?";
                 console.error('Error:', error);
+            });
+        });
+        addForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            const formData = new FormData(addForm);
+    
+            fetch('/add', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                confirm.innerText = data.message;
+                addForm.reset();
+            })
+            .catch(error => {
+                    display.innerText = "Did you start server.py?";
+                    console.error('Error:', error);
             });
         });
     </script>

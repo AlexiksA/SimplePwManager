@@ -8,10 +8,10 @@ def genKey():
     #input()
     return key.decode()
 
-def addPw():
-    name = input('Account name: ')
-    pwd = input('Password: ')
-    fer = Fernet(input('Key: '))
+def addPw(name, pwd, key):
+    #name = input('Account name: ')
+    #pwd = input('Password: ')
+    fer = Fernet(key) #input('Key: ')
     encryptedPw = fer.encrypt(pwd.encode()).decode()
 
     with open('passwords.txt', 'a') as pwFile:
@@ -19,7 +19,6 @@ def addPw():
             pwFile.write(name + "|" + encryptedPw + "\n")
 
 def viewPw(key):
-    #Todo: implement a vector with user and Password fields that must be returned, not printed
     result = []
     try:
         fer = Fernet(key=key)
