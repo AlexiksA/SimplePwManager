@@ -6,7 +6,7 @@ And Flask
 
 ## My assumption is that you are going to <br> write the key on a piece of paper 👌😊<br>
 
-#How to run
+# How to run
 Start the server <br>
 `python server.py`
 Go to http://127.0.0.1:5000 and try <br>
