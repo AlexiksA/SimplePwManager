@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>PwManager</h1>
+    <div id="mainDIv">
+        <form id="pwForm">
+            <label for="user_input">Enter something:</label>
+            <input type="text" id="user_input" name="my_data">
+            <button type="submit">Send to Flask</button>
+        </form>
+        <br>
+        <button id="genBtn">Click to generate a new key</button>
+    </div>
+    <script>
+        const pwForm = document.getElementById("pwForm");
+        const genBtn = document.getElementById("genBtn");
+        const display = document.getElementById("mainDIv");
+        pwForm.addEventListener("submit", function(e) {
+            e.preventDefault()
+            const formData = new FormData(pwForm);
+            
+            fetch('/submit', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    display.innerHTML = "";
+                    data.forEach(item => {
+                        display.innerHTML += `<p>UserL ${item.user}, Pass: ${item.password}</p>`;
+                    });
+                        
+            })
+            .catch(error => {
+                    display.innerText = "Did you start server.py?";
+                    console.error('Error:', error);
+            });
+        });
+        genBtn.addEventListener("click", () => {
+            fetch('/get')
+            .then(response => response.json())
+            .then(data => {
+                display.innerHTML = `Your key is: ${data.key}`;
+            })
+            .catch(error => {
+                display.innerHTML = "Is server.py on?";
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
